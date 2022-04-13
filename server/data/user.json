@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "5c8a1d5b0190b214360dc057",
+    "email": "vb@gmail.com",
+    "role": "admin",
+    "password": "12345"
+  },
+  {
+    "_id": "5c8a1dfa2f8fb814b56fa181",
+    "email": "sa@gmail.com",
+    "role": "user",
+    "password": "sa"
+  },
+  {
+    "_id": "5c8a1e1a2f8fb814b56fa182",
+    "email": "v@gmail.com",
+    "role": "user",
+    "password": "v"
+  }
+]

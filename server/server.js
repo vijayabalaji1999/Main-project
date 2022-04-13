@@ -18,11 +18,11 @@ dotenv.config({ path: "./config.env" });
 app.use(cookieParser());
 
 app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "DELETE"],
-    credentials: true,
-  })
+ cors({
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST", "DELETE"],
+  credentials: true,
+ })
 );
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,32 +32,33 @@ const DB = process.env.DATABASE;
 mongoose.connect(DB).then(() => console.log("DB connection successful!"));
 
 let store = new MongoDBStore({
-  uri: DB,
-  collection: "mySessions",
-  expires: 1000 * 60 * 60 * 24 * 30,
+ uri: DB,
+ collection: "mySessions",
+ expires: 1000 * 60 * 60 * 24 * 30,
 });
 
 app.use(
-  session({
-    key: "userId",
-    secret: "subscribe",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-      secure: false,
-    },
-    store: store,
-  })
+ session({
+  key: "userId",
+  secret: "subscribe",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+   maxAge: 1000 * 60 * 60 * 24 * 7,
+   secure: false,
+  },
+  store: store,
+ })
 );
 
-app.get("/user/login", (req, res) => {
-  // console.log("Hello " + JSON.stringify(req.session));
-  if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user });
-  } else {
-    res.send({ loggedIn: false });
-  }
+app.get("/user/sessions", (req, res) => {
+ // console.log("Hello " + JSON.stringify(req.session));
+ console.log(req.session.user);
+ if (req.session.user) {
+  res.send({ loggedIn: true, user: req.session.user });
+ } else {
+  res.send({ loggedIn: false });
+ }
 });
 
 app.use("/images", express.static(`../react-app/public`));
@@ -72,7 +73,7 @@ app.use("/api/user", userroute);
 
 const port = 3001;
 app.listen(port, () => {
-  console.log(`App running on port ${port}...`);
+ console.log(`App running on port ${port}...`);
 });
 
 app.use(globalErrorHandler);
